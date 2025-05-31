@@ -1,12 +1,16 @@
 import express from "express";
 import path from "path";
 
+import { HTML } from "./HTML";
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, "../dist")));
 
-app.use((_req, res) => {
-  res.status(200).send("Hello, world!");
+app.use("/", (_req, res) => {
+  const html = HTML({ title: "Hello, world!" });
+  res.setHeader("Content-Type", "text/html");
+  res.send(html);
 });
 
 // Start the server
