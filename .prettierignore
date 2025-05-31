@@ -1,0 +1,7 @@
+.changeset/*.md
+.vscode/
+.eslintcache
+coverage/
+dist/
+node_modules/
+package-lock.yaml
