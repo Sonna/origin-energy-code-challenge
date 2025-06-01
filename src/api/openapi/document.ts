@@ -9,7 +9,7 @@ export const openApiDocument = createDocument({
     version: "1.0.0",
   },
   paths: {
-    "/api/energy-accounts": {
+    "/energy-accounts": {
       get: {
         operationId: "getEnergyAccounts",
         description: "Returns all energy accounts",

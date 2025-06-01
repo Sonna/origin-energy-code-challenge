@@ -3,7 +3,7 @@ import React from "react";
 import { hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 
-import { App } from "./App";
+import { App } from "./components/App/App";
 
 const queryClient = new QueryClient();
 

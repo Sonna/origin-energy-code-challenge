@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import { MemoryRouter } from "react-router";
 import html from "dedent";
 
-import { App } from "./App";
+import { App } from "./components/App/App";
 
 interface Props {
   title: string;

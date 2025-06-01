@@ -2,8 +2,12 @@ import { EnergyAccountRepository } from "./../repositories/energyAccountReposito
 import { DueChargesRepository } from "./../repositories/dueChargesRepository";
 import { EnergyAccountService } from "./../services/energyAccountService";
 
-export type ApiContext = {
+export interface ApiServices {
   energyAccountService: EnergyAccountService;
+}
+
+export type ApiContext = {
+  services: ApiServices;
 };
 
 export async function createApiContext(): Promise<ApiContext> {
@@ -18,6 +22,6 @@ export async function createApiContext(): Promise<ApiContext> {
   );
 
   return {
-    energyAccountService,
+    services: { energyAccountService },
   };
 }

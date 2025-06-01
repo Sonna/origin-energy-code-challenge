@@ -1,12 +1,29 @@
 import { Express } from "express";
 import swaggerUi from "swagger-ui-express";
 
-import { ApiContext } from "./../context/apiContext";
+import { createApiContext } from "../context/apiContext";
 import { openApiDocument } from "./../openapi/document";
-import { createApiRouter } from "./apiRouter";
+import { createApi } from "./api";
 
-export function setupRoutes(app: Express, context: ApiContext) {
-  app.use("/api", createApiRouter(context));
+export async function setupRoutes(app: Express) {
+  const api = await createApi();
+  const apiContext = await createApiContext();
+
+  app.use("/api", (req, res) => {
+    api.handleRequest(
+      {
+        method: req.method,
+        path: req.path,
+        body: req.body,
+        query: req.query as Record<string, string | string[]>,
+        headers: req.headers as Record<string, string | string[]>,
+      },
+      req,
+      res,
+      apiContext,
+    );
+  });
+
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(openApiDocument));
   app.get("/openapi.json", (_req, res) => {
     res.json(openApiDocument);

@@ -2,7 +2,6 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 
-import { createApiContext } from "./api/context/apiContext";
 import { setupRoutes } from "./api/routes/setupRoutes";
 import { HTML } from "./HTML";
 
@@ -17,8 +16,7 @@ async function serve() {
 
   app.use(express.static(path.join(__dirname, "../dist")));
 
-  const context = await createApiContext();
-  setupRoutes(app, context);
+  await setupRoutes(app);
 
   app.use("/", (_req, res) => {
     const entry = manifest["src/client.tsx"];
