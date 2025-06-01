@@ -1,5 +1,7 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { renderToString } from "react-dom/server";
+import { MemoryRouter } from "react-router";
 import html from "dedent";
 
 import { App } from "./App";
@@ -10,7 +12,15 @@ interface Props {
 }
 
 export const HTML = ({ title, clientScriptPath }: Props) => {
-  const app = renderToString(<App />);
+  const queryClient = new QueryClient();
+
+  const app = renderToString(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    </QueryClientProvider>,
+  );
 
   return html/* html */ `
     <!DOCTYPE html>

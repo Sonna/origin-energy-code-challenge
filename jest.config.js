@@ -8,6 +8,7 @@ module.exports = {
   setupFilesAfterEnv: [
     "@testing-library/jest-dom/jest-globals",
     "@testing-library/jest-dom",
+    "./test/jestSetup.ts",
   ],
   transform: {
     ...tsJestTransformCfg,
