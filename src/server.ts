@@ -2,30 +2,40 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 
+import { createApiContext } from "./api/context/apiContext";
+import { setupRoutes } from "./api/routes/setupRoutes";
 import { HTML } from "./HTML";
-
-const app = express();
 
 // Load Vite manifest
 const manifest = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, ".vite/manifest.json"), "utf-8"),
 );
 
-app.use(express.static(path.join(__dirname, "../dist")));
+async function serve() {
+  const app = express();
+  app.use(express.json());
 
-app.use("/", (_req, res) => {
-  const entry = manifest["src/client.tsx"];
-  const html = HTML({
-    title: "Hello, world!",
-    clientScriptPath: path.basename(entry.file),
+  app.use(express.static(path.join(__dirname, "../dist")));
+
+  const context = await createApiContext();
+  setupRoutes(app, context);
+
+  app.use("/", (_req, res) => {
+    const entry = manifest["src/client.tsx"];
+    const html = HTML({
+      title: "Hello, world!",
+      clientScriptPath: path.basename(entry.file),
+    });
+    res.setHeader("Content-Type", "text/html");
+    res.send(html);
   });
-  res.setHeader("Content-Type", "text/html");
-  res.send(html);
-});
 
-// Start the server
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`App listening on port http://localhost:${PORT}`);
-  console.log("Press Ctrl+C to quit.");
-});
+  // Start the server
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, () => {
+    console.log(`App listening on port http://localhost:${PORT}`);
+    console.log("Press Ctrl+C to quit.");
+  });
+}
+
+serve();
