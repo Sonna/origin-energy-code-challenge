@@ -20,8 +20,10 @@ async function serve() {
 
   app.use("/", (_req, res) => {
     const entry = manifest["src/client.tsx"];
+    const css = entry.css.map((c: string) => path.basename(c));
     const html = HTML({
       title: "Hello, world!",
+      clientCssPaths: css,
       clientScriptPath: path.basename(entry.file),
     });
     res.setHeader("Content-Type", "text/html");

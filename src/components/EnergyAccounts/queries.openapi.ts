@@ -1,12 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 
+import type { Paths } from "./../../api/openapi/openapi.d.ts";
 import { getApiClient } from "./../../modules/openapi-client";
 
-export const useGetEnergyAccounts = () =>
+export type AccountType = Paths.GetEnergyAccounts.Parameters.AccountType;
+
+export const useGetEnergyAccounts = (accountType?: AccountType) =>
   useQuery({
-    queryKey: ["getEnergyAccounts"],
+    queryKey: ["getEnergyAccounts", accountType],
     queryFn: () =>
       getApiClient()
-        .then((client) => client.getEnergyAccounts())
+        .then((client) => client.getEnergyAccounts({ accountType }))
         .then((res) => res.data),
   });

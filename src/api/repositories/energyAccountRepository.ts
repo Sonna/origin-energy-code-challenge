@@ -8,11 +8,12 @@ export class EnergyAccountRepository {
     this.accounts = await MOCK_ENERGY_ACCOUNTS_API();
   }
 
-  getAllAccounts() {
-    return this.accounts;
+  findAll(filter?: { type?: "GAS" | "ELECTRICITY" }) {
+    if (!filter?.type) return this.accounts;
+    return this.accounts.filter((acc) => acc.type === filter.type);
   }
 
-  getAccountById(id: string) {
+  findById(id: string) {
     return this.accounts.find((acc) => acc.id === id);
   }
 }

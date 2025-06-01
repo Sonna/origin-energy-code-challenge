@@ -6,12 +6,23 @@ import { logger } from "./../utils/logger";
 
 export async function getEnergyAccountsWithCharges(
   _ctx: Context,
-  _req: Request,
+  req: Request,
   res: Response,
   { services }: ApiContext,
 ) {
+  const type =
+    typeof req.query.accountType === "string"
+      ? (req.query.accountType.toUpperCase() as "GAS" | "ELECTRICITY")
+      : undefined;
+
+  if (type && !["GAS", "ELECTRICITY"].includes(type)) {
+    return res.status(400).json({ error: "Invalid account type" });
+  }
+
   try {
-    const result = await services.energyAccountService.getAccountsWithCharges();
+    const result = await services.energyAccountService.getAccountsWithCharges({
+      type,
+    });
     res.json(result);
   } catch (e) {
     logger.error(e);

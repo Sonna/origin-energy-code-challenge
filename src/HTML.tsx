@@ -8,10 +8,11 @@ import { App } from "./components/App/App";
 
 interface Props {
   title: string;
+  clientCssPaths: string[];
   clientScriptPath: string;
 }
 
-export const HTML = ({ title, clientScriptPath }: Props) => {
+export const HTML = ({ title, clientCssPaths, clientScriptPath }: Props) => {
   const queryClient = new QueryClient();
 
   const app = renderToString(
@@ -22,11 +23,19 @@ export const HTML = ({ title, clientScriptPath }: Props) => {
     </QueryClientProvider>,
   );
 
+  const stylesheets = renderToString(
+    clientCssPaths.map((clientCssPath) => (
+      <link rel="stylesheet" href={`/assets/${clientCssPath}`} />
+    )),
+  );
+
   return html/* html */ `
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
       <head>
+        <meta charset="UTF-8" />
         <title>${title}</title>
+        ${stylesheets}
       </head>
       <body>
         <div id="root">${app}</div>

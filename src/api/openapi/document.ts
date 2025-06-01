@@ -13,6 +13,18 @@ export const openApiDocument = createDocument({
       get: {
         operationId: "getEnergyAccounts",
         description: "Returns all energy accounts",
+        parameters: [
+          {
+            in: "query",
+            name: "accountType",
+            required: false,
+            schema: {
+              type: "string",
+              enum: ["GAS", "ELECTRICITY"],
+            },
+            description: "Filter by account type",
+          },
+        ],
         responses: {
           "200": {
             description: "Successful response",

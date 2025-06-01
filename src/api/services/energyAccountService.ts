@@ -7,8 +7,8 @@ export class EnergyAccountService {
     private chargesRepo: InstanceType<typeof DueChargesRepository>,
   ) {}
 
-  async getAccountsWithCharges() {
-    const accounts = this.energyRepo.getAllAccounts();
+  async getAccountsWithCharges(filter?: { type?: "GAS" | "ELECTRICITY" }) {
+    const accounts = this.energyRepo.findAll(filter);
     const charges = this.chargesRepo.getAllCharges();
 
     return accounts.map((account) => {
