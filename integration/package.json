@@ -1,0 +1,13 @@
+{
+  "name": "integration",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test:cypress": "CI=1 npx cypress run",
+    "test:cypress-gui": "npx cypress open"
+  },
+  "devDependencies": {
+    "cypress": "14.0.0"
+  }
+}

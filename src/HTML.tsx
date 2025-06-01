@@ -6,9 +6,10 @@ import { App } from "./App";
 
 interface Props {
   title: string;
+  clientScriptPath: string;
 }
 
-export const HTML = ({ title }: Props) => {
+export const HTML = ({ title, clientScriptPath }: Props) => {
   const app = renderToString(<App />);
 
   return html/* html */ `
@@ -20,7 +21,7 @@ export const HTML = ({ title }: Props) => {
       <body>
         <div id="root">${app}</div>
       </body>
-      <script src="/client.js"></script>
+      <script type="module" src="/assets/${clientScriptPath}"></script>
     </html>
   `;
 };

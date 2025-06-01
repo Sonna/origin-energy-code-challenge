@@ -1,13 +1,7 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "jsx": "react-jsx",
-    "lib": ["es6", "dom"],
-    "outDir": "./dist",
-    "strict": true,
-    "target": "es5",
-    "types": ["node", "jest", "@testing-library/jest-dom"]
-  },
-  "include": ["src"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.client.json" },
+    { "path": "./tsconfig.server.json" }
+  ]
 }
