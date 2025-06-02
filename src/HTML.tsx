@@ -1,25 +1,49 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { MemoryRouter } from "react-router";
 import html from "dedent";
 
+import type { Paths } from "./api/openapi/openapi.d.ts";
 import { App } from "./components/App/App";
+import { getApiClient } from "./modules/openapi-client";
+
+export type AccountType = Paths.GetEnergyAccounts.Parameters.AccountType;
 
 interface Props {
+  accountType?: AccountType;
   title: string;
   clientCssPaths: string[];
   clientScriptPath: string;
 }
 
-export const HTML = ({ title, clientCssPaths, clientScriptPath }: Props) => {
+export const HTML = async ({
+  accountType,
+  title,
+  clientCssPaths,
+  clientScriptPath,
+}: Props) => {
   const queryClient = new QueryClient();
-
+  await queryClient.prefetchQuery({
+    queryKey: ["getEnergyAccounts", accountType],
+    queryFn: () =>
+      getApiClient()
+        .then((client) => client.getEnergyAccounts({ accountType }))
+        .then((res) => res.data),
+  });
+  const dehydratedState = dehydrate(queryClient);
   const app = renderToString(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
+      <HydrationBoundary state={dehydratedState}>
+        <MemoryRouter>
+          <App />
+        </MemoryRouter>
+      </HydrationBoundary>
     </QueryClientProvider>,
   );
 
@@ -29,7 +53,7 @@ export const HTML = ({ title, clientCssPaths, clientScriptPath }: Props) => {
     )),
   );
 
-  return html/* html */ `
+  const text = html/* html */ `
     <!DOCTYPE html>
     <html lang="en">
       <head>
@@ -41,7 +65,13 @@ export const HTML = ({ title, clientCssPaths, clientScriptPath }: Props) => {
         <div id="root">${app}</div>
       </body>
       <script type="module" src="/assets/${clientScriptPath}"></script>
+      <script>
+        window.__REACT_QUERY_STATE__ = ${JSON.stringify(dehydratedState)};
+      </script>
     </html>
   `;
+
+  queryClient.clear();
+  return text;
 };
 export default HTML;

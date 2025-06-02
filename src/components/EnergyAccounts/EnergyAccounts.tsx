@@ -7,7 +7,7 @@ import { type AccountType, useGetEnergyAccounts } from "./queries.openapi";
 
 export const EnergyAccounts = () => {
   const [params] = useSearchParams();
-  const type = params.get("accountType") as AccountType || undefined;
+  const type = (params.get("accountType") as AccountType) || undefined;
   const { data, isFetching, error } = useGetEnergyAccounts(type);
 
   if (isFetching) return <Loader />;

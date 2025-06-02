@@ -2,8 +2,11 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 
+import type { Paths } from "./api/openapi/openapi.d.ts";
 import { setupRoutes } from "./api/routes/setupRoutes";
 import { HTML } from "./HTML";
+
+export type AccountType = Paths.GetEnergyAccounts.Parameters.AccountType;
 
 // Load Vite manifest
 const manifest = JSON.parse(
@@ -18,10 +21,12 @@ async function serve() {
 
   await setupRoutes(app);
 
-  app.use("/", (_req, res) => {
+  app.use("/", async (req, res) => {
+    const accountType = req.query.accountType as AccountType | undefined;
     const entry = manifest["src/client.tsx"];
     const css = entry.css.map((c: string) => path.basename(c));
-    const html = HTML({
+    const html = await HTML({
+      accountType,
       title: "Hello, world!",
       clientCssPaths: css,
       clientScriptPath: path.basename(entry.file),
