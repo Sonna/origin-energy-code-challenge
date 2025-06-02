@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import { useParams, useSearchParams } from "react-router";
 import { useDebounce } from "use-debounce";
 
-import { AccountTabs } from "./../AccountTabs/AccountTabs";
+import { AccountTabs } from "../AccountTabs/AccountTabs";
+import { Card } from "../Card/Card";
 import { CircleIcon } from "../CircleIcon/CircleIcon";
-import { Loader } from "./../Loader/Loader";
-import { MakePaymentModal } from "./../MakePaymentModal/MakePaymentModal";
-import { Card, Text } from "./../../lib/PaperCss";
+import { Loader } from "../Loader/Loader";
+import { MakePaymentModal } from "../MakePaymentModal/MakePaymentModal";
+import { Text } from "../Text/Text";
 
 import { getTotalColour } from "./getTotalColour";
 import { type AccountType, useGetEnergyAccounts } from "./queries.openapi";
 
-export const EnergyAccounts = () => {
+export const EnergyAccountsSearch = () => {
   const { accountType } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchInput, setSearchInput] = useState("");

@@ -2,13 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { Text } from "./../Text/Text";
 import {
   makePaymentInputSchema,
   MakePaymentInput,
 } from "./../../schemas/makePaymentApi.schema";
 
 import { useMakePayment } from "./mutations.openapi";
-import { Text } from "../../lib/PaperCss";
 
 interface Props {
   accountId: string;

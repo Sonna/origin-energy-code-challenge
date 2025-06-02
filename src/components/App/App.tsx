@@ -1,12 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router";
 
-import { EnergyAccounts } from "./../EnergyAccounts/EnergyAccounts";
+import { EnergyAccountsSearch } from "../EnergyAccountsSearch/EnergyAccountsSearch";
 
 export const App = () => {
   return (
     <Routes>
-      <Route path="/:accountType?" element={<EnergyAccounts />} />
+      <Route path="/:accountType?" element={<EnergyAccountsSearch />} />
     </Routes>
   );
 };

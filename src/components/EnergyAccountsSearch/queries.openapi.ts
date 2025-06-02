@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type { Paths } from "./../../api/openapi/openapi.d.ts";
-import { getApiClient } from "./../../modules/openapi-client";
+import type { Paths } from "../../api/openapi/openapi.js";
+import { getApiClient } from "../../modules/openapi-client/index.js";
 
 export type AccountType = Paths.GetEnergyAccounts.Parameters.AccountType;
 

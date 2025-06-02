@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 
 import { MakePaymentForm } from "./../MakePaymentForm/MakePaymentForm";
-import { Text } from "./../../lib/PaperCss";
+import { Text } from "./../Text/Text";
 
 interface Props {
   accountId: string;
