@@ -1,9 +1,10 @@
 import { type Document, OpenAPIBackend } from "openapi-backend";
 
 import { getEnergyAccountsWithCharges } from "./../controllers/energyAccountController";
+import { makePayment } from "./../controllers/paymentsController";
 import { openApiDocument } from "./../openapi/document";
 
-export async function createApi() {
+export function createApi() {
   const api = new OpenAPIBackend({
     definition: openApiDocument as Document,
     handlers: {
@@ -12,6 +13,7 @@ export async function createApi() {
   });
 
   api.register({ getEnergyAccounts: getEnergyAccountsWithCharges });
+  api.register({ makePayment });
 
   return api;
 }

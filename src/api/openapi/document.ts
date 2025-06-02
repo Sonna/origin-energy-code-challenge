@@ -4,6 +4,10 @@ import {
   accountTypeSchema,
   energyAccountsResponseSchema,
 } from "./../../schemas/energyAccountsApi.schema";
+import {
+  makePaymentInputSchema,
+  makePaymentResponseSchema,
+} from "./../../schemas/makePaymentApi.schema";
 
 export const openApiDocument = createDocument({
   openapi: "3.0.0",
@@ -42,11 +46,44 @@ export const openApiDocument = createDocument({
         },
       },
     },
+    "/make-payment": {
+      post: {
+        operationId: "makePayment",
+        summary: "Make a payment and apply it to an account",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/MakePaymentInput",
+              },
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Payment processed and charge recorded",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/MakePaymentResponse",
+                },
+              },
+            },
+          },
+          "400": {
+            description: "Invalid request",
+          },
+        },
+      },
+    },
   },
   components: {
     schemas: {
       AccountType: accountTypeSchema,
       EnergyAccountsResponse: energyAccountsResponseSchema,
+      MakePaymentInput: makePaymentInputSchema,
+      MakePaymentResponse: makePaymentResponseSchema,
     },
   },
 });

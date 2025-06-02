@@ -1,4 +1,4 @@
-import { creditCardSchema } from "./creditCardSchema";
+import { creditCardSchema } from "./creditCard.schema";
 
 describe("creditCardSchema", () => {
   it("accepts valid credit card info", () => {

@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router";
 import { AccountTabs } from "./../AccountTabs/AccountTabs";
 import { CircleIcon } from "../CircleIcon/CircleIcon";
 import { Loader } from "./../Loader/Loader";
+import { MakePaymentModal } from "./../MakePaymentModal/MakePaymentModal";
 import { Card, Text } from "./../../lib/PaperCss";
 
 import { getTotalColour } from "./getTotalColour";
@@ -40,6 +41,8 @@ export const EnergyAccounts = () => {
                       Amount Due: ${a.totalDue.toFixed(2)}
                     </Text>
                   )}
+
+                  <MakePaymentModal accountId={a.id} />
                 </div>
               </div>
             </Card>

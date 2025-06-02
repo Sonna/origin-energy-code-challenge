@@ -63,6 +63,7 @@ export const HTML = async ({
       </head>
       <body>
         <div id="root">${app}</div>
+        <div id="modal-root"></div>
       </body>
       <script type="module" src="/assets/${clientScriptPath}"></script>
       <script>

@@ -6,7 +6,7 @@ import { openApiDocument } from "./../openapi/document";
 import { createApi } from "./api";
 
 export async function setupRoutes(app: Express) {
-  const api = await createApi();
+  const api = createApi();
   const apiContext = await createApiContext();
 
   app.use("/api", (req, res) => {
