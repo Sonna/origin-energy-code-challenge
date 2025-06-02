@@ -7,10 +7,11 @@ import { Card } from "../Card/Card";
 import { CircleIcon } from "../CircleIcon/CircleIcon";
 import { Loader } from "../Loader/Loader";
 import { MakePaymentModal } from "../MakePaymentModal/MakePaymentModal";
+import type { AccountType } from "../../schemas/energyAccountsApi.schema";
 import { Text } from "../Text/Text";
 
 import { getTotalColour } from "./getTotalColour";
-import { type AccountType, useGetEnergyAccounts } from "./queries.openapi";
+import {useGetEnergyAccounts } from "./queries.openapi";
 
 export const EnergyAccountsSearch = () => {
   const { accountType } = useParams();

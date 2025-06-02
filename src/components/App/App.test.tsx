@@ -4,8 +4,8 @@ import { testRender } from "../../../test/testUtils";
 
 import { App } from "./App";
 
-jest.mock("./../EnergyAccounts/EnergyAccounts", () => ({
-  EnergyAccounts: () => <h1>Hello, TypeScript React!</h1>,
+jest.mock("./../EnergyAccountsSearch/EnergyAccountsSearch", () => ({
+  EnergyAccountsSearch: () => <h1>Hello, TypeScript React!</h1>,
 }));
 
 describe("App", () => {
