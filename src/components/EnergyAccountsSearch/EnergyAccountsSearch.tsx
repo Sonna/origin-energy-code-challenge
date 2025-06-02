@@ -11,7 +11,7 @@ import type { AccountType } from "../../schemas/energyAccountsApi.schema";
 import { Text } from "../Text/Text";
 
 import { getTotalColour } from "./getTotalColour";
-import {useGetEnergyAccounts } from "./queries.openapi";
+import { useGetEnergyAccounts } from "./queries.openapi";
 
 export const EnergyAccountsSearch = () => {
   const { accountType } = useParams();
