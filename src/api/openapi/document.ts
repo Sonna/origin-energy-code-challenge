@@ -1,6 +1,9 @@
 import { createDocument } from "zod-openapi";
 
-import { energyAccountSchema } from "./../../schemas/energyAccount.schema";
+import {
+  accountTypeSchema,
+  energyAccountsResponseSchema,
+} from "./../../schemas/energyAccountsApi.schema";
 
 export const openApiDocument = createDocument({
   openapi: "3.0.0",
@@ -8,6 +11,7 @@ export const openApiDocument = createDocument({
     title: "Mock API",
     version: "1.0.0",
   },
+  servers: [{ url: "/api" }],
   paths: {
     "/energy-accounts": {
       get: {
@@ -19,8 +23,7 @@ export const openApiDocument = createDocument({
             name: "accountType",
             required: false,
             schema: {
-              type: "string",
-              enum: ["GAS", "ELECTRICITY"],
+              $ref: "#/components/schemas/AccountType",
             },
             description: "Filter by account type",
           },
@@ -31,8 +34,7 @@ export const openApiDocument = createDocument({
             content: {
               "application/json": {
                 schema: {
-                  type: "array",
-                  items: { $ref: "#/components/schemas/EnergyAccount" },
+                  $ref: "#/components/schemas/EnergyAccountsResponse",
                 },
               },
             },
@@ -43,7 +45,8 @@ export const openApiDocument = createDocument({
   },
   components: {
     schemas: {
-      EnergyAccount: energyAccountSchema,
+      AccountType: accountTypeSchema,
+      EnergyAccountsResponse: energyAccountsResponseSchema,
     },
   },
 });

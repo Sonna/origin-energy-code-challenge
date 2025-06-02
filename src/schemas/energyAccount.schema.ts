@@ -6,14 +6,14 @@ const baseAccountSchema = z.object({
   address: z.string().min(1, "Address is required"),
 });
 
-const electricityAccountSchema = baseAccountSchema
+export const electricityAccountSchema = baseAccountSchema
   .extend({
     type: z.literal("ELECTRICITY"),
     meterNumber: z.string().regex(/^\d{10}$/, "Invalid meter number"),
   })
   .openapi({ ref: "ElectricityAccount" });
 
-const gasAccountSchema = baseAccountSchema
+export const gasAccountSchema = baseAccountSchema
   .extend({
     type: z.literal("GAS"),
     volume: z.number().nonnegative(),

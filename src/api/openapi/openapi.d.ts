@@ -8,13 +8,37 @@ import type {
 
 declare namespace Components {
   namespace Schemas {
+    export type AccountType = "GAS" | "ELECTRICITY";
+    export interface DueCharge {
+      id: string; // ^D-\d{4}$
+      accountId: string; // ^A-\d{4}$
+      date: string;
+      amount: number;
+    }
     export interface ElectricityAccount {
       id: string; // ^A-\d{4}$
       type: "ELECTRICITY";
       address: string;
       meterNumber: string; // ^\d{10}$
     }
-    export type EnergyAccount = ElectricityAccount | GasAccount;
+    export type EnergyAccountWithCharges =
+      | {
+          id: string; // ^A-\d{4}$
+          type: "ELECTRICITY";
+          address: string;
+          meterNumber: string; // ^\d{10}$
+          dueCharges: DueCharge[];
+          totalDue: number;
+        }
+      | {
+          id: string; // ^A-\d{4}$
+          type: "GAS";
+          address: string;
+          volume: number;
+          dueCharges: DueCharge[];
+          totalDue: number;
+        };
+    export type EnergyAccountsResponse = EnergyAccountWithCharges[];
     export interface GasAccount {
       id: string; // ^A-\d{4}$
       type: "GAS";
@@ -26,13 +50,13 @@ declare namespace Components {
 declare namespace Paths {
   namespace GetEnergyAccounts {
     namespace Parameters {
-      export type AccountType = "GAS" | "ELECTRICITY";
+      export type AccountType = Components.Schemas.AccountType;
     }
     export interface QueryParameters {
       accountType?: Parameters.AccountType;
     }
     namespace Responses {
-      export type $200 = Components.Schemas.EnergyAccount[];
+      export type $200 = Components.Schemas.EnergyAccountsResponse;
     }
   }
 }
@@ -63,6 +87,10 @@ export interface PathsDictionary {
 
 export type Client = OpenAPIClient<OperationMethods, PathsDictionary>;
 
+export type AccountType = Components.Schemas.AccountType;
+export type DueCharge = Components.Schemas.DueCharge;
 export type ElectricityAccount = Components.Schemas.ElectricityAccount;
-export type EnergyAccount = Components.Schemas.EnergyAccount;
+export type EnergyAccountWithCharges =
+  Components.Schemas.EnergyAccountWithCharges;
+export type EnergyAccountsResponse = Components.Schemas.EnergyAccountsResponse;
 export type GasAccount = Components.Schemas.GasAccount;

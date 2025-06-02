@@ -4,7 +4,7 @@ export const Card = ({
   title,
   children,
 }: {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 }) => (
   <div className="card">
