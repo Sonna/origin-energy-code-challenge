@@ -9,7 +9,6 @@ export class PaymentService {
 
   makePayment(accountId: string, amount: number) {
     this.energyRepo.mustFindById(accountId);
-    this.chargesRepo.create(accountId, -amount);
-    return { success: true, amount, accountId };
+    return this.chargesRepo.create(accountId, -amount);
   }
 }

@@ -1,4 +1,5 @@
 import { creditCardSchema } from "./creditCard.schema";
+import { dueChargeSchema } from "./dueCharge.schema";
 import { z } from "./utils";
 
 export const makePaymentInputSchema = z
@@ -14,8 +15,8 @@ export const makePaymentInputSchema = z
 
 export type MakePaymentInput = z.infer<typeof makePaymentInputSchema>;
 
-export const makePaymentResponseSchema = z
-  .object({ success: z.boolean(), message: z.string() })
+export const makePaymentResponseSchema = dueChargeSchema
+  .extend({})
   .openapi({ ref: "MakePaymentResponse" });
 
 export type MakePaymentResponse = z.infer<typeof makePaymentResponseSchema>;

@@ -27,11 +27,8 @@ export function makePayment(
   const { accountId, amount } = parsed.data;
 
   try {
-    services.paymentService.makePayment(accountId, amount);
-    res.json({
-      success: true,
-      message: `Payment of $${amount} has been recorded for account ${accountId}.`,
-    });
+    const dueCharge = services.paymentService.makePayment(accountId, amount);
+    res.json(dueCharge);
   } catch (e) {
     logger.error(e);
     res.status(500).json({ error: "Internal Server Error" });

@@ -55,10 +55,7 @@ declare namespace Components {
       creditCard: CreditCard;
       amount: number;
     }
-    export interface MakePaymentResponse {
-      success: boolean;
-      message: string;
-    }
+    export type MakePaymentResponse = DueCharge;
   }
 }
 declare namespace Paths {
