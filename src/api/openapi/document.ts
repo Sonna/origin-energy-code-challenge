@@ -31,6 +31,15 @@ export const openApiDocument = createDocument({
             },
             description: "Filter by account type",
           },
+          {
+            in: "query",
+            name: "q",
+            required: false,
+            schema: {
+              type: "string",
+            },
+            description: "Search/Filter by address",
+          },
         ],
         responses: {
           "200": {

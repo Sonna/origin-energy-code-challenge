@@ -1,5 +1,5 @@
 import React from "react";
-import { createSearchParams, useNavigate, useSearchParams } from "react-router";
+import { generatePath, useNavigate, useParams } from "react-router";
 
 const tabs = [
   { label: "All", value: "" },
@@ -8,8 +8,7 @@ const tabs = [
 ];
 
 export const AccountTabs = () => {
-  const [params] = useSearchParams();
-  const type = params.get("accountType") || "";
+  const { accountType = "" } = useParams();
   const navigate = useNavigate();
 
   return (
@@ -19,15 +18,13 @@ export const AccountTabs = () => {
           <input
             id={`tab${i}`}
             type="radio"
-            name="tabs"
-            checked={type === tab.value}
+            name={`tab${i}`}
+            checked={accountType === tab.value.toLocaleLowerCase()}
             onChange={() =>
               navigate({
-                pathname: "/",
-                search:
-                  tab.label !== "All"
-                    ? createSearchParams({ accountType: tab.value }).toString()
-                    : undefined,
+                pathname: generatePath("/:accountType?", {
+                  accountType: tab.value.toLocaleLowerCase(),
+                }),
               })
             }
           />

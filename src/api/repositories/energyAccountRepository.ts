@@ -8,9 +8,17 @@ export class EnergyAccountRepository {
     this.accounts = await MOCK_ENERGY_ACCOUNTS_API();
   }
 
-  findAll(filter?: { type?: "GAS" | "ELECTRICITY" }) {
-    if (!filter?.type) return this.accounts;
-    return this.accounts.filter((acc) => acc.type === filter.type);
+  findAll(filter?: { type?: "GAS" | "ELECTRICITY"; address?: string }) {
+    return this.accounts.filter((acc) => {
+      const matchesType = !filter?.type || acc.type === filter?.type;
+      const matchesSearch =
+        !filter?.address ||
+        filter?.address
+          .toLowerCase()
+          .split(/\s+/)
+          .every((word) => acc.address.toLowerCase().includes(word));
+      return matchesType && matchesSearch;
+    });
   }
 
   findById(id: string) {

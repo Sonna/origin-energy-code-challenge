@@ -2,13 +2,11 @@ import type { Context } from "openapi-backend";
 import { Request, Response } from "express";
 
 import type { ApiContext } from "./../context/apiContext";
-import {
-  type AccountType,
-  //   accountTypeSchema,
-} from "../../schemas/energyAccountsApi.schema";
+import { type AccountType } from "../../schemas/energyAccountsApi.schema";
 import { logger } from "./../utils/logger";
 
 interface FilterParams {
+  q: string;
   accountType: AccountType;
 }
 
@@ -19,13 +17,10 @@ export function getEnergyAccountsWithCharges(
   res: Response,
   { services }: ApiContext,
 ) {
-  //   const parsed = accountTypeSchema.safeParse(req.query.accountType);
-  //   if (!parsed.success) {
-  //     return res.status(400).json({ error: "Invalid account type" });
-  //   }
+  const q = typeof req.query.q === "string" ? req.query.q : undefined;
   const type =
     typeof req.query.accountType === "string"
-      ? (req.query.accountType.toUpperCase() as "GAS" | "ELECTRICITY")
+      ? (req.query.accountType.toUpperCase() as AccountType)
       : undefined;
 
   if (type && !["GAS", "ELECTRICITY"].includes(type)) {
@@ -34,7 +29,8 @@ export function getEnergyAccountsWithCharges(
 
   try {
     const result = services.energyAccountService.getAccountsWithCharges({
-      type, //: parsed.data,
+      type,
+      address: q,
     });
     res.json(result);
   } catch (e) {

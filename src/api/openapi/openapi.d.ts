@@ -65,9 +65,11 @@ declare namespace Paths {
   namespace GetEnergyAccounts {
     namespace Parameters {
       export type AccountType = Components.Schemas.AccountType;
+      export type Q = string;
     }
     export interface QueryParameters {
       accountType?: Parameters.AccountType;
+      q?: Parameters.Q;
     }
     namespace Responses {
       export type $200 = Components.Schemas.EnergyAccountsResponse;

@@ -8,6 +8,7 @@ import {
 } from "./../../schemas/makePaymentApi.schema";
 
 import { useMakePayment } from "./mutations.openapi";
+import { Text } from "../../lib/PaperCss";
 
 interface Props {
   accountId: string;
@@ -47,11 +48,16 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
     >
       <h3>Make a Payment</h3>
 
-      <div className="form-group">
-        <label htmlFor="amount">Amount</label>
+      <div className="form-group margin-bottom-large">
+        <Text>How much would you like to pay?</Text>
+        <label htmlFor="amount" className="visually-hidden">
+          Amount
+        </label>
         <input
           type="number"
           step="0.01"
+          className="input-block"
+          placeholder="Amount"
           {...register("amount", { valueAsNumber: true })}
         />
         {errors.amount && (
@@ -60,8 +66,16 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="cardNumber">Card Number</label>
-        <input type="text" {...register("creditCard.cardNumber")} />
+        <Text>How would you like to pay?</Text>
+        <label htmlFor="creditCard.cardNumber" className="visually-hidden">
+          Card Number
+        </label>
+        <input
+          type="text"
+          className="input-block"
+          placeholder="Card Number"
+          {...register("creditCard.cardNumber")}
+        />
         {errors.creditCard?.cardNumber && (
           <small className="text-danger">
             {errors.creditCard.cardNumber.message}
@@ -70,10 +84,17 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
       </div>
 
       <div className="row">
-        <div className="col sm-6">
+        <div className="sm-6">
           <div className="form-group">
-            <label htmlFor="expiryDate">Expiry Date (MM/YY)</label>
-            <input type="text" {...register("creditCard.expiryDate")} />
+            <label htmlFor="creditCard.expiryDate" className="visually-hidden">
+              Expiry Date (MM/YY)
+            </label>
+            <input
+              type="text"
+              className="input-block"
+              placeholder="Expiry"
+              {...register("creditCard.expiryDate")}
+            />
             {errors.creditCard?.expiryDate && (
               <small className="text-danger">
                 {errors.creditCard.expiryDate.message}
@@ -81,10 +102,17 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
             )}
           </div>
         </div>
-        <div className="col sm-6">
+        <div className="sm-6">
           <div className="form-group">
-            <label htmlFor="cvv">CVV</label>
-            <input type="text" {...register("creditCard.cvv")} />
+            <label htmlFor="creditCard.cvv" className="visually-hidden">
+              CVV
+            </label>
+            <input
+              type="text"
+              className="input-block"
+              placeholder="CVV"
+              {...register("creditCard.cvv")}
+            />
             {errors.creditCard?.cvv && (
               <small className="text-danger">
                 {errors.creditCard.cvv.message}
@@ -94,9 +122,15 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
         </div>
       </div>
 
-      <button type="submit" className="btn-primary" disabled={isPending}>
-        {isPending ? "Processing..." : "Pay"}
-      </button>
+      <div className="row flex-center">
+        <button
+          type="submit"
+          className="paper-btn btn-danger-outline"
+          disabled={isPending}
+        >
+          {isPending ? "Processing..." : "Pay"}
+        </button>
+      </div>
 
       {isSuccess && <p className="text-success">Payment successful!</p>}
       {error && (

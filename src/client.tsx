@@ -8,6 +8,7 @@ import { hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import "papercss/dist/paper.min.css";
 
+import "./client.css";
 import { App } from "./components/App/App";
 
 declare global {

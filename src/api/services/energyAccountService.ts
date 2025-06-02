@@ -7,7 +7,10 @@ export class EnergyAccountService {
     private chargesRepo: InstanceType<typeof DueChargesRepository>,
   ) {}
 
-  getAccountsWithCharges(filter?: { type?: "GAS" | "ELECTRICITY" }) {
+  getAccountsWithCharges(filter?: {
+    type?: "GAS" | "ELECTRICITY";
+    address?: string;
+  }) {
     const accounts = this.energyRepo.findAll(filter);
     const charges = this.chargesRepo.findAll();
 

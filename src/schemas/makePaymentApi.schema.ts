@@ -5,7 +5,10 @@ export const makePaymentInputSchema = z
   .object({
     accountId: z.string().min(1, "Account ID is required"),
     creditCard: creditCardSchema,
-    amount: z.number(),
+    amount: z
+      .number()
+      .positive({ message: "Payment amount must be positive" })
+      .openapi({ exclusiveMinimum: undefined }), // unfortunately this breaks in OpenAPI 3.0
   })
   .openapi({ ref: "MakePaymentInput" });
 

@@ -6,7 +6,7 @@ import { EnergyAccounts } from "./../EnergyAccounts/EnergyAccounts";
 export const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<EnergyAccounts />} />
+      <Route path="/:accountType?" element={<EnergyAccounts />} />
     </Routes>
   );
 };

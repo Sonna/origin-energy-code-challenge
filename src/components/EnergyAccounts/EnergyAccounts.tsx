@@ -1,5 +1,6 @@
-import React from "react";
-import { useSearchParams } from "react-router";
+import React, { useState } from "react";
+import { useParams, useSearchParams } from "react-router";
+import { useDebounce } from "use-debounce";
 
 import { AccountTabs } from "./../AccountTabs/AccountTabs";
 import { CircleIcon } from "../CircleIcon/CircleIcon";
@@ -11,14 +12,49 @@ import { getTotalColour } from "./getTotalColour";
 import { type AccountType, useGetEnergyAccounts } from "./queries.openapi";
 
 export const EnergyAccounts = () => {
-  const [params] = useSearchParams();
-  const type = (params.get("accountType") as AccountType) || undefined;
-  const { data, isFetching, error } = useGetEnergyAccounts(type);
+  const { accountType } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch] = useDebounce(searchInput, 300);
+  const { data, isFetching, error } = useGetEnergyAccounts({
+    accountType: accountType as AccountType,
+    q: debouncedSearch,
+  });
 
   if (error) return <p>Error loading accounts</p>;
 
   return (
     <div className="paper container container-lg">
+      <div className="row flex-center form-group">
+        <label htmlFor="search" className="visually-hidden">
+          Search
+        </label>
+        <input
+          name="search"
+          type="search"
+          placeholder="Search address..."
+          className="input-block sm-11"
+          value={searchInput}
+          onChange={(e) => {
+            const { name, value } = e.target;
+            setSearchInput(value);
+            setSearchParams({ [name]: value });
+          }}
+        />
+        <button
+          type="button"
+          className="sm-1 paper-btn btn-primary-outline"
+          onClick={() => {
+            setSearchInput("");
+            if (searchParams.has("search")) {
+              searchParams.delete("search");
+              setSearchParams(searchParams);
+            }
+          }}
+        >
+          Clear
+        </button>
+      </div>
       <AccountTabs />
       {isFetching && <Loader />}
       {data &&
@@ -30,17 +66,16 @@ export const EnergyAccounts = () => {
                   <CircleIcon />
                 </div>
                 <div className="col-9 col">
-                  <h3 className="card-title">{`${a.type} Account — ${a.id}`}</h3>
+                  <h3 className="card-title">{a.type}</h3>
+                  <Text>{a.id}</Text>
                   <Text>{a.address}</Text>
 
-                  {"meterNumber" in a && <Text>Meter: {a.meterNumber}</Text>}
-                  {"volume" in a && <Text>Volume: {a.volume} kWh</Text>}
-
-                  {"totalDue" in a && (
+                  <div className="row">
+                    <Text className="col-fill">Amount Due:</Text>
                     <Text color={getTotalColour(a.totalDue)}>
-                      Amount Due: ${a.totalDue.toFixed(2)}
+                      ${a.totalDue.toFixed(2)}
                     </Text>
-                  )}
+                  </div>
 
                   <MakePaymentModal accountId={a.id} />
                 </div>
