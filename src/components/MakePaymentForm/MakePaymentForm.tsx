@@ -141,7 +141,7 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
         </button>
       </div>
 
-      {isSuccess && <p className="text-success">Payment successful!</p>}
+      {isSuccess && <Text className="text-success">Payment successful!</Text>}
       {error && (
         <Text className="text-danger">
           Payment failed: {(error as Error).message}

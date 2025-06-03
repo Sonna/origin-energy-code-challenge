@@ -7,7 +7,7 @@ import { HTML } from "./HTML";
 
 // Load Vite manifest
 const manifest = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, ".vite/manifest.json"), "utf-8")
+  fs.readFileSync(path.resolve(__dirname, ".vite/manifest.json"), "utf-8"),
 );
 
 async function serve() {
