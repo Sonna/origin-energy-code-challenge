@@ -23,7 +23,7 @@ export const EnergyAccountsSearch = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchInput, setSearchInput] = useState("");
   const [debouncedSearch] = useDebounce(searchInput, 300);
-  const { data, isFetching, error } = useGetEnergyAccounts({
+  const { data, isLoading, error } = useGetEnergyAccounts({
     accountType: accountType as AccountType,
     q: debouncedSearch,
   });
@@ -63,7 +63,7 @@ export const EnergyAccountsSearch = () => {
         </button>
       </div>
       <AccountTabs />
-      {isFetching && <Loader />}
+      {isLoading && <Loader />}
       {data &&
         data.map((a) => (
           <div key={a.id} className="margin-bottom-small">

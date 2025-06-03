@@ -9,14 +9,14 @@ import { useGetPaymentsHistory } from "./queries.openapi";
 
 export const DueChargesHistory = () => {
   const { accountId = "" } = useParams();
-  const { data, isFetching, error } = useGetPaymentsHistory(accountId);
+  const { data, isLoading, error } = useGetPaymentsHistory(accountId);
 
   if (error) return <p>Error loading accounts</p>;
 
   return (
     <div className="paper container container-lg">
       <NavLink to="/">Back</NavLink>
-      {isFetching && <Loader />}
+      {isLoading && <Loader />}
       <table>
         <thead>
           <tr>
