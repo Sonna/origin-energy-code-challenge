@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 
 import { MakePaymentForm } from "./../MakePaymentForm/MakePaymentForm";
-import { Text } from "./../Text/Text";
+import { Text } from "../DesignSystem/Text";
 
 interface Props {
   accountId: string;
@@ -18,7 +18,7 @@ export const MakePaymentModal = ({ accountId }: Props) => {
   return (
     <>
       <label htmlFor={modalId}>
-        <Text color="danger">Make Payment</Text>
+        <Text color="danger">Make a Payment</Text>
       </label>
       <input
         className="modal-state"

@@ -7,8 +7,8 @@ import { Card } from "../Card/Card";
 import { CircleIcon } from "../CircleIcon/CircleIcon";
 import { Loader } from "../Loader/Loader";
 import { MakePaymentModal } from "../MakePaymentModal/MakePaymentModal";
-import type { AccountType } from "../../schemas/energyAccountsApi.schema";
-import { Text } from "../Text/Text";
+import type { AccountType } from "../../schemas/energyAccount.schema";
+import { Heading, Text } from "../DesignSystem";
 
 import { getTotalColour } from "./getTotalColour";
 import { useGetEnergyAccounts } from "./queries.openapi";
@@ -62,13 +62,15 @@ export const EnergyAccountsSearch = () => {
       {data &&
         data.map((a) => (
           <div key={a.id} className="margin-bottom-small">
-            <Card key={a.id}>
+            <Card key={a.id} data={{ automation: "energy-account-card" }}>
               <div className="row">
                 <div className="col-3 col">
                   <CircleIcon />
                 </div>
                 <div className="col-9 col">
-                  <h3 className="card-title">{a.type}</h3>
+                  <Heading level="h3" className="card-title">
+                    {a.type}
+                  </Heading>
                   <Text>{a.id}</Text>
                   <Text>{a.address}</Text>
 

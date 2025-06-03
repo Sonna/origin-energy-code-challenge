@@ -7,7 +7,7 @@
     "build:client": "tsc -p tsconfig.client.json",
     "build:server": "tsc -p tsconfig.server.json",
     "dev": "vite",
-    "format": "npx prettier --cache --write src test && eslint --cache --cache-location 'node_modules/.cache/eslint/.eslintcache' --fix src test",
+    "format": "npx prettier --cache --write src test integration && eslint --cache --cache-location 'node_modules/.cache/eslint/.eslintcache' --fix src test integration",
     "generate-types": "npx openapicmd typegen --client http://localhost:8080/openapi.json > ./src/api/openapi/openapi.d.ts",
     "postgenerate-types": "npm run format",
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:tsc",

@@ -1,5 +1,16 @@
-import { energyAccountSchema } from "./energyAccount.schema";
+import { accountTypeSchema, energyAccountSchema } from "./energyAccount.schema";
 
+describe("accountTypeSchema", () => {
+  it("accepts valid types", () => {
+    expect(accountTypeSchema.parse("GAS")).toBe("GAS");
+    expect(accountTypeSchema.parse("ELECTRICITY")).toBe("ELECTRICITY");
+  });
+
+  it("rejects invalid types", () => {
+    expect(() => accountTypeSchema.parse("WATER")).toThrow();
+    expect(() => accountTypeSchema.parse("")).toThrow();
+  });
+});
 describe("energyAccountSchema", () => {
   it("validates ELECTRICITY account", () => {
     const input = {

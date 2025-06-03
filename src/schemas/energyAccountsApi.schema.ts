@@ -5,12 +5,6 @@ import {
 } from "./energyAccount.schema";
 import { z } from "./utils";
 
-export const accountTypeSchema = z
-  .enum(["GAS", "ELECTRICITY"])
-  .openapi({ ref: "AccountType" });
-
-export type AccountType = z.infer<typeof accountTypeSchema>;
-
 const withCharges = {
   dueCharges: z.array(dueChargeSchema),
   totalDue: z.number(),

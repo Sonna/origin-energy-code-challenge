@@ -2,7 +2,7 @@ import type { Context } from "openapi-backend";
 import { Request, Response } from "express";
 
 import type { ApiContext } from "./../context/apiContext";
-import { type AccountType } from "../../schemas/energyAccountsApi.schema";
+import type { AccountType } from "../../schemas/energyAccount.schema";
 import { logger } from "./../utils/logger";
 
 interface FilterParams {

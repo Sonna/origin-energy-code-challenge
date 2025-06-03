@@ -1,19 +1,4 @@
-import {
-  accountTypeSchema,
-  energyAccountsResponseSchema,
-} from "./energyAccountsApi.schema";
-
-describe("accountTypeSchema", () => {
-  it("accepts valid types", () => {
-    expect(accountTypeSchema.parse("GAS")).toBe("GAS");
-    expect(accountTypeSchema.parse("ELECTRICITY")).toBe("ELECTRICITY");
-  });
-
-  it("rejects invalid types", () => {
-    expect(() => accountTypeSchema.parse("WATER")).toThrow();
-    expect(() => accountTypeSchema.parse("")).toThrow();
-  });
-});
+import { energyAccountsResponseSchema } from "./energyAccountsApi.schema";
 
 describe("energyAccountsResponseSchema", () => {
   const validGasAccount = {

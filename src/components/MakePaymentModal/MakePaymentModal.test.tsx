@@ -32,14 +32,14 @@ describe("MakePaymentModal", () => {
 
   it("renders trigger label", () => {
     setup();
-    expect(screen.getByText("Make Payment")).toBeInTheDocument();
+    expect(screen.getByText("Make a Payment")).toBeInTheDocument();
   });
 
   //   it("opens the modal when checkbox is clicked", () => {
   //     setup();
 
   //     // const checkbox = getByRole("checkbox");
-  //     fireEvent.click(screen.getByText("Make Payment"));
+  //     fireEvent.click(screen.getByText("Make a Payment"));
 
   //     expect(screen.getByTestId("make-payment-form")).toBeInTheDocument();
   //     expect(screen.getByText("Form for A-123")).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe("MakePaymentModal", () => {
   //     setup();
 
   //     // fireEvent.click(getByRole("checkbox"));
-  //     fireEvent.click(screen.getByText("Make Payment"));
+  //     fireEvent.click(screen.getByText("Make a Payment"));
 
   //     const closeBtn = screen.getByText("X");
   //     fireEvent.click(closeBtn);
@@ -62,7 +62,7 @@ describe("MakePaymentModal", () => {
     setup();
 
     // fireEvent.click(getByRole("checkbox"));
-    fireEvent.click(screen.getByText("Make Payment"));
+    fireEvent.click(screen.getByText("Make a Payment"));
 
     const submitBtn = screen.getByText("Mock Submit");
     fireEvent.click(submitBtn);

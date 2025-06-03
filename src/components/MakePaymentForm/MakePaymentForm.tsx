@@ -2,7 +2,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { Text } from "./../Text/Text";
+import {
+  FieldLabel,
+  Form,
+  FormInput,
+  FormGroup,
+  Heading,
+  Text,
+} from "../DesignSystem";
 import {
   makePaymentInputSchema,
   MakePaymentInput,
@@ -42,18 +49,15 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
   });
 
   return (
-    <form
-      onSubmit={handleSubmit((data) => mutate(data))}
-      className="form-group"
-    >
-      <h3>Make a Payment</h3>
+    <Form onSubmit={handleSubmit((data) => mutate(data))}>
+      <Heading level="h3">Make a Payment</Heading>
 
-      <div className="form-group margin-bottom-large">
+      <FormGroup className="margin-bottom-large">
         <Text>How much would you like to pay?</Text>
-        <label htmlFor="amount" className="visually-hidden">
+        <FieldLabel htmlFor="amount" className="visually-hidden">
           Amount
-        </label>
-        <input
+        </FieldLabel>
+        <FormInput
           type="number"
           step="0.01"
           className="input-block"
@@ -61,64 +65,69 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
           {...register("amount", { valueAsNumber: true })}
         />
         {errors.amount && (
-          <small className="text-danger">{errors.amount.message}</small>
+          <Text as="small" className="text-danger">
+            {errors.amount.message}
+          </Text>
         )}
-      </div>
+      </FormGroup>
 
-      <div className="form-group">
+      <FormGroup>
         <Text>How would you like to pay?</Text>
-        <label htmlFor="creditCard.cardNumber" className="visually-hidden">
+        <FieldLabel htmlFor="creditCard.cardNumber" className="visually-hidden">
           Card Number
-        </label>
-        <input
+        </FieldLabel>
+        <FormInput
           type="text"
           className="input-block"
           placeholder="Card Number"
           {...register("creditCard.cardNumber")}
         />
         {errors.creditCard?.cardNumber && (
-          <small className="text-danger">
+          <Text as="small" className="text-danger">
             {errors.creditCard.cardNumber.message}
-          </small>
+          </Text>
         )}
-      </div>
+      </FormGroup>
 
       <div className="row">
         <div className="sm-6">
-          <div className="form-group">
-            <label htmlFor="creditCard.expiryDate" className="visually-hidden">
+          <FormGroup>
+            <FieldLabel
+              htmlFor="creditCard.expiryDate"
+              className="visually-hidden"
+            >
               Expiry Date (MM/YY)
-            </label>
-            <input
+            </FieldLabel>
+            <FormInput
               type="text"
               className="input-block"
               placeholder="Expiry"
               {...register("creditCard.expiryDate")}
             />
             {errors.creditCard?.expiryDate && (
-              <small className="text-danger">
+              <Text as="small" className="text-danger">
                 {errors.creditCard.expiryDate.message}
-              </small>
+              </Text>
             )}
-          </div>
+          </FormGroup>
         </div>
         <div className="sm-6">
-          <div className="form-group">
-            <label htmlFor="creditCard.cvv" className="visually-hidden">
+          <FormGroup>
+            <FieldLabel htmlFor="creditCard.cvv" className="visually-hidden">
               CVV
-            </label>
-            <input
+            </FieldLabel>
+            <FormInput
               type="text"
               className="input-block"
               placeholder="CVV"
               {...register("creditCard.cvv")}
             />
             {errors.creditCard?.cvv && (
-              <small className="text-danger">
+              <Text as="small" className="text-danger">
                 {errors.creditCard.cvv.message}
-              </small>
+              </Text>
             )}
-          </div>
+          </FormGroup>
         </div>
       </div>
 
@@ -134,10 +143,10 @@ export const MakePaymentForm = ({ accountId, onSuccess }: Props) => {
 
       {isSuccess && <p className="text-success">Payment successful!</p>}
       {error && (
-        <p className="text-danger">
+        <Text className="text-danger">
           Payment failed: {(error as Error).message}
-        </p>
+        </Text>
       )}
-    </form>
+    </Form>
   );
 };

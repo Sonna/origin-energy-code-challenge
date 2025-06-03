@@ -1,9 +1,7 @@
 import { createDocument } from "zod-openapi";
 
-import {
-  accountTypeSchema,
-  energyAccountsResponseSchema,
-} from "./../../schemas/energyAccountsApi.schema";
+import { accountTypeSchema } from "./../../schemas/energyAccount.schema";
+import { energyAccountsResponseSchema } from "./../../schemas/energyAccountsApi.schema";
 import {
   makePaymentInputSchema,
   makePaymentResponseSchema,

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type { AccountType } from "../../schemas/energyAccountsApi.schema";
+import type { AccountType } from "../../schemas/energyAccount.schema";
 import { getApiClient } from "../../modules/openapi-client";
 
 export const useGetEnergyAccounts = (params?: {

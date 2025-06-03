@@ -1,4 +1,4 @@
-const { defineConfig } = require('cypress');
+const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   defaultCommandTimeout: 7000,
@@ -7,13 +7,13 @@ module.exports = defineConfig({
   chromeWebSecurity: false,
   experimentalFetchPolyfill: true,
   env: {
-    apiBaseUrl: 'http://localhost:8080',
+    apiBaseUrl: "http://localhost:8080",
   },
   retries: {
     runMode: 2,
   },
   e2e: {
-    excludeSpecPattern: process.env.CI ? 'cypress/e2e/all.cy.js' : [],
-    baseUrl: 'http://localhost:8080',
+    excludeSpecPattern: process.env.CI ? "cypress/e2e/all.cy.js" : [],
+    baseUrl: "http://localhost:8080",
   },
 });

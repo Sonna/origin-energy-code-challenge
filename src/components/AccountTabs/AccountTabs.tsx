@@ -14,11 +14,11 @@ export const AccountTabs = () => {
   return (
     <div className="row flex-spaces tabs">
       {tabs.map((tab, i) => (
-        <div key={`tab${i}`}>
+        <div key={`tab-${i}`}>
           <input
-            id={`tab${i}`}
+            id={`tab-${tab.label}`}
             type="radio"
-            name={`tab${i}`}
+            name={`tab-${tab.label}`}
             checked={accountType === tab.value.toLocaleLowerCase()}
             onChange={() =>
               navigate({
@@ -28,7 +28,7 @@ export const AccountTabs = () => {
               })
             }
           />
-          <label htmlFor={`tab${i}`}>{tab.label}</label>
+          <label htmlFor={`tab-${tab.label}`}>{tab.label}</label>
         </div>
       ))}
     </div>

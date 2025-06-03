@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "classnames";
 
-type TextProps = {
-  as?: "p" | "span" | "h1" | "h2" | "h3" | "h4";
+export type TextProps = {
+  as?: "p" | "small" | "span" | "h1" | "h2" | "h3" | "h4";
   color?: "primary" | "secondary" | "danger" | "success" | "muted";
   className?: string;
   children: React.ReactNode;
