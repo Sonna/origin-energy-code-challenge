@@ -2,15 +2,12 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 
-import type { Paths } from "./api/openapi/openapi.d.ts";
 import { setupRoutes } from "./api/routes/setupRoutes";
 import { HTML } from "./HTML";
 
-export type AccountType = Paths.GetEnergyAccounts.Parameters.AccountType;
-
 // Load Vite manifest
 const manifest = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, ".vite/manifest.json"), "utf-8"),
+  fs.readFileSync(path.resolve(__dirname, ".vite/manifest.json"), "utf-8")
 );
 
 async function serve() {
@@ -22,12 +19,10 @@ async function serve() {
   await setupRoutes(app);
 
   app.use("/", async (req, res) => {
-    const accountType = req.query.accountType as AccountType | undefined;
     const entry = manifest["src/client.tsx"];
     const css = entry.css.map((c: string) => path.basename(c));
     const html = await HTML({
-      accountType,
-      title: "Hello, world!",
+      title: "Origin Energy - 🧪 Take Home Challenge",
       clientCssPaths: css,
       clientScriptPath: path.basename(entry.file),
     });
