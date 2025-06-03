@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { useParams, useSearchParams } from "react-router";
+import {
+  generatePath,
+  NavLink,
+  useParams,
+  useSearchParams,
+} from "react-router";
 import { useDebounce } from "use-debounce";
 
 import { AccountTabs } from "../AccountTabs/AccountTabs";
@@ -9,8 +14,8 @@ import { Loader } from "../Loader/Loader";
 import { MakePaymentModal } from "../MakePaymentModal/MakePaymentModal";
 import type { AccountType } from "../../schemas/energyAccount.schema";
 import { Heading, Text } from "../DesignSystem";
+import { getTotalColour } from "../utils/getTotalColour";
 
-import { getTotalColour } from "./getTotalColour";
 import { useGetEnergyAccounts } from "./queries.openapi";
 
 export const EnergyAccountsSearch = () => {
@@ -74,12 +79,18 @@ export const EnergyAccountsSearch = () => {
                   <Text>{a.id}</Text>
                   <Text>{a.address}</Text>
 
-                  <div className="row">
-                    <Text className="col-fill">Amount Due:</Text>
-                    <Text color={getTotalColour(a.totalDue)}>
-                      ${a.totalDue.toFixed(2)}
-                    </Text>
-                  </div>
+                  <NavLink
+                    to={generatePath("/:accountId/history", {
+                      accountId: a.id,
+                    })}
+                  >
+                    <div className="row">
+                      <Text className="col-fill">Amount Due:</Text>
+                      <Text color={getTotalColour(a.totalDue)}>
+                        ${a.totalDue.toFixed(2)}
+                      </Text>
+                    </div>
+                  </NavLink>
 
                   <MakePaymentModal accountId={a.id} />
                 </div>

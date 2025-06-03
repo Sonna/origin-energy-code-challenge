@@ -6,6 +6,7 @@ import {
   makePaymentInputSchema,
   makePaymentResponseSchema,
 } from "./../../schemas/makePaymentApi.schema";
+import { paymentsHistoryResponseSchema } from "./../../schemas/paymentsHistoryApi.schema";
 
 export const openApiDocument = createDocument({
   openapi: "3.0.0",
@@ -53,7 +54,7 @@ export const openApiDocument = createDocument({
         },
       },
     },
-    "/make-payment": {
+    "/payment": {
       post: {
         operationId: "makePayment",
         summary: "Make a payment and apply it to an account",
@@ -84,6 +85,35 @@ export const openApiDocument = createDocument({
         },
       },
     },
+    "/payments/{accountId}": {
+      get: {
+        operationId: "getPaymentsHistory",
+        description: "Returns history of payments for energy account",
+        parameters: [
+          {
+            in: "path",
+            name: "accountId",
+            required: true,
+            schema: {
+              type: "string",
+            },
+            example: "A-0001",
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Successful response",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/PaymentsHistoryResponse",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
   components: {
     schemas: {
@@ -91,6 +121,7 @@ export const openApiDocument = createDocument({
       EnergyAccountsResponse: energyAccountsResponseSchema,
       MakePaymentInput: makePaymentInputSchema,
       MakePaymentResponse: makePaymentResponseSchema,
+      PaymentsHistoryResponse: paymentsHistoryResponseSchema,
     },
   },
 });

@@ -8,6 +8,7 @@ import {
   MakePaymentResponse,
 } from "../../schemas/makePaymentApi.schema";
 import { logger } from "./../utils/logger";
+import { PaymentsHistoryResponse } from "../openapi/openapi";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function makePayment(
@@ -29,6 +30,28 @@ export function makePayment(
   try {
     const dueCharge = services.paymentService.makePayment(accountId, amount);
     res.json(dueCharge);
+  } catch (e) {
+    logger.error(e);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+interface PaymentsHistoryParams {
+  accountId: string;
+}
+
+export function paymentsHistory(
+  ctx: Context<PaymentsHistoryParams>,
+  _req: Request<PaymentsHistoryParams, PaymentsHistoryResponse>,
+  res: Response,
+  { repos }: ApiContext,
+) {
+  const accountId = ctx.request.params.accountId;
+
+  try {
+    repos.energyRepo.mustFindById(accountId);
+    const dueCharges = repos.chargesRepo.findByAccountId(accountId);
+    res.json(dueCharges);
   } catch (e) {
     logger.error(e);
     res.status(500).json({ error: "Internal Server Error" });

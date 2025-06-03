@@ -8,8 +8,14 @@ export interface ApiServices {
   paymentService: PaymentService;
 }
 
+export interface ApiRepositories {
+  energyRepo: EnergyAccountRepository;
+  chargesRepo: DueChargesRepository;
+}
+
 export type ApiContext = {
   services: ApiServices;
+  repos: ApiRepositories;
 };
 
 export async function createApiContext(): Promise<ApiContext> {
@@ -24,5 +30,6 @@ export async function createApiContext(): Promise<ApiContext> {
 
   return {
     services: { energyAccountService, paymentService },
+    repos: { energyRepo, chargesRepo },
   };
 }

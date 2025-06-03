@@ -76,8 +76,19 @@ describe("home page", () => {
 
   // ✅ Implement a different page/view that shows a history of payments made.
   it("renders a history of payments", () => {
-    // TODO
     cy.visit("/");
+
+    // Clicking the "Amount Due:" navigates to payments history page
+    cy.contains("Amount Due:").should("exist").click();
+
+    cy.contains("D-0001").should("exist");
+    cy.contains("A-0001").should("exist");
+    cy.contains("$10.00").should("exist");
+    cy.contains("2025-04-01").should("exist");
+
+    cy.contains("D-0002").should("exist");
+    cy.contains("$20.00").should("exist");
+    cy.contains("2025-04-08").should("exist");
   });
 
   // ✅ Implement a search feature to search by account address.

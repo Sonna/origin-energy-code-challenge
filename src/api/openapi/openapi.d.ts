@@ -56,6 +56,7 @@ declare namespace Components {
       amount: number;
     }
     export type MakePaymentResponse = DueCharge;
+    export type PaymentsHistoryResponse = DueCharge[];
   }
 }
 declare namespace Paths {
@@ -70,6 +71,17 @@ declare namespace Paths {
     }
     namespace Responses {
       export type $200 = Components.Schemas.EnergyAccountsResponse;
+    }
+  }
+  namespace GetPaymentsHistory {
+    namespace Parameters {
+      export type AccountId = string;
+    }
+    export interface PathParameters {
+      accountId: Parameters.AccountId;
+    }
+    namespace Responses {
+      export type $200 = Components.Schemas.PaymentsHistoryResponse;
     }
   }
   namespace MakePayment {
@@ -98,6 +110,14 @@ export interface OperationMethods {
     data?: Paths.MakePayment.RequestBody,
     config?: AxiosRequestConfig,
   ): OperationResponse<Paths.MakePayment.Responses.$200>;
+  /**
+   * getPaymentsHistory - Returns history of payments for energy account
+   */
+  "getPaymentsHistory"(
+    parameters?: Parameters<Paths.GetPaymentsHistory.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig,
+  ): OperationResponse<Paths.GetPaymentsHistory.Responses.$200>;
 }
 
 export interface PathsDictionary {
@@ -111,7 +131,7 @@ export interface PathsDictionary {
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.GetEnergyAccounts.Responses.$200>;
   };
-  ["/make-payment"]: {
+  ["/payment"]: {
     /**
      * makePayment - Make a payment and apply it to an account
      */
@@ -120,6 +140,16 @@ export interface PathsDictionary {
       data?: Paths.MakePayment.RequestBody,
       config?: AxiosRequestConfig,
     ): OperationResponse<Paths.MakePayment.Responses.$200>;
+  };
+  ["/payments/{accountId}"]: {
+    /**
+     * getPaymentsHistory - Returns history of payments for energy account
+     */
+    "get"(
+      parameters?: Parameters<Paths.GetPaymentsHistory.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig,
+    ): OperationResponse<Paths.GetPaymentsHistory.Responses.$200>;
   };
 }
 
@@ -135,3 +165,5 @@ export type EnergyAccountsResponse = Components.Schemas.EnergyAccountsResponse;
 export type GasAccount = Components.Schemas.GasAccount;
 export type MakePaymentInput = Components.Schemas.MakePaymentInput;
 export type MakePaymentResponse = Components.Schemas.MakePaymentResponse;
+export type PaymentsHistoryResponse =
+  Components.Schemas.PaymentsHistoryResponse;
